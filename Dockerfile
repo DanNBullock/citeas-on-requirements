@@ -11,4 +11,6 @@ FROM gcr.io/distroless/python3-debian10
 COPY --from=builder /app /app
 WORKDIR /app
 ENV PYTHONPATH /app
+#a test to see if it gets this far
+CMD ["echo 'test' "]
 CMD ["printenv ; /app/main.py"]
