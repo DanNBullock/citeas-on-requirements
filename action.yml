@@ -1,0 +1,13 @@
+name: "citeas-on-requirements"
+description: "Apply citeAs to the elements of a requirements.txt file to make an ACKNOWLEDGMENTS file"
+author: "Daniel N Bullock"
+inputs:
+  inputFile:
+    description: "Input file to parse & make citations for"
+    default: "requirements.txt"
+outputs:
+  myOutput:
+    description: "ACKNOWLEDGMENTS.md file, a lightly formatted software bibliography"
+runs:
+  using: "docker"
+  image: "Dockerfile"
