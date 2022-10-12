@@ -249,9 +249,11 @@ def inputToCitations(inputPath,kwargs={}):
 #define main function / wrapper
 def main():
     import os
+    print('Beginning citation generation process')
     inputPath = os.environ["INPUT_INPUTFILE"]
-    
-    import sys
+    print('Input path obtained')
+    print(inputPath)
+    #import sys
     #unpack the contents of the sysargs
     #argsIn=[iArg for iArg in sys.argv]
     
@@ -260,6 +262,7 @@ def main():
 
     #run the function
     inputToCitations(inputPath)
+    print('Citations generated')
 
 if __name__ == "__main__":
     main()    
