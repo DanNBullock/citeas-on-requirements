@@ -5,28 +5,168 @@ Created on Tue Oct 11 16:50:39 2022
 @author: dbullock
 """
 
-#open requirements.txt file
-with open('requirements.txt') as f:
-    lines = f.readlines()
+def findRequirementsTXTFile(repoDir=''):
+    """
+    Finds the requirements.txt file from a repository into a list which
+    can be iterated through with _queryPackage_.
+    
+    Function intended to encapsulate adapaive search capabilities for this
+    file.
 
-#emailAdress='githubActionTest@DanNBullock.com'
-emailAdress=''
-apiStem='https://api.citeas.org/product/'
+    Parameters
+    ----------
+    repoDir : string, optional
+        Location of directory, relative to current working directory, in which
+        to search for the target requirements.txt file. Examples:
+            
+            - '' : will search the current working directory
+            - os.system('git rev-parse --show-toplevel') : would search in the
+            top directory of the 'current' (e.g. on current working directory
+            path) repository.  Probably.
+            - 'test' : would search the test directory for (e.g. when running
+            unit tests)
+            The default is ''.
+    
+    Returns
+    -------
+    requirementsTXTpath: string
+        Path to the requirements.txt file.
+        
+    """
+    
+    
+    import os
+    #set target file name
+    targetFileName='requirements.txt'
+    
+    #TODO enhance this functionality to make it more adaptive
+    #append the dirstem, if necessary
+    requirementsTXTpath=os.path.join(repoDir,targetFileName)
+    
+    
+    return requirementsTXTpath
 
+def parseRequirementsTXT(requirementsTXTpath):
+    """
+    Parses the requirements.txt file into a list which can be iterated through
+    with _queryPackage_.
 
-import requests
-#make a url request
-testURL=''.join([apiStem,lines[0].replace('\n',''),'?',emailAdress])
+    Parameters
+    ----------
+    requirementsTXTpath : string
+        Location of targetrequirements.txt file.
 
-outAPIresponse=requests.get(testURL)
+    Returns
+    -------
+    packagesList : list of strings
+        A list of strings, each of which corresponds to a package enumerated
+        in an appropriately formatted 
+        [requirements.txt](https://pip.pypa.io/en/stable/reference/requirements-file-format/)
+        file.
 
-import json
-outResponseJson=json.loads(outAPIresponse.text)
+    """
 
-#optionsKey=['APS','Harvard','Nature','MLA','Chicago','Vancouver']
-#set default choice to Nature
-defaultCiteFormat=2
+    
+    #open requirements.txt file
+    with open(requirementsTXTpath) as f:
+        lines = f.readlines()
+    
+    #iterate across lines and remove newline character
+    packagesList=[iLines.replace('\n','') for iLines in lines]
+    
+    return packagesList
 
-#loop and ship
+def queryPackage(packageString,citationOption=2,emailTag='githubActionTest@DanNBullock.com'):
+    """
+    Performs a query using the [citeas api](https://citeas.org/api), to find a
+    citation for the input string, which is presumed to correspond to a
+    software package.
+    
+    WARNING: citeas is not perfect, and will often return mangled citations.
+    In cases where this software returns an undesired output, it is
+    recommended that the user performs a sanity check manually with the citeas
+    web interface.
 
-outCitation=outResponseJson['citations'][defaultCiteFormat]['citation']
+    Parameters
+    ----------
+    packageString : string; putative software package
+        The string that will be submitted to the citeas API in order to
+        obtain a citation
+    citationOption : int, 0 to 5
+        Index of the desired citation format from the following list:
+        ['APS','Harvard','Nature','MLA','Chicago','Vancouver']
+        Default is currently 2, for 'Nature'.
+    emailTag: string; putative email adress
+        Email tag to append to the end of the API request.  For the purposes
+        of usage tracking with the citeas organization.  Current default is
+        'githubActionTest@DanNBullock.com', as this is presumed to be
+        more informative than an actual email adress given their stated goals.
+        
+
+    Returns
+    -------
+    citationOut: string
+        An appropriately formatted citation corresponding to the input 
+        software package string and associated citation option choice.
+
+    """
+    import requests
+    import json
+    import warnings
+    import time
+    
+    #set url stem for query
+    apiStem='https://api.citeas.org/product/'
+    
+    #debug
+    print('\n ' + packageString + '\n')
+    
+    #form the query URL
+    queryURL=''.join([apiStem,packageString,'?','email=',emailTag])
+    
+    #use requests to perform the query
+    outAPIresponse=requests.get(queryURL)
+    
+    #convert output string to json format
+    outResponseJson=json.loads(outAPIresponse.text)
+    
+    #index in to the response json dictionary and extract the desired citation
+    citationOut=outResponseJson['citations'][citationOption]['citation']
+    
+    #use the behavior of the APS citation to check for mangled authorship
+    if outResponseJson['citations'][0]['citation'][0:6]=='(n.d.)':
+        warnings.warn('Authorship record for requested package  ' + packageString +'  appears to be mangled')
+        
+    #add a wait, to ensure that we don't get rate limited by the API    
+    time.sleep(5)
+    
+    return citationOut
+    
+def requirementsToCitationList(requirementsTXTpath, kwargs={}):
+    """
+    Iterates through the requirements.txt entries and generates citations
+    for each item.
+
+    Parameters
+    ----------
+    requirementsTXTpath : string
+        Location of targetrequirements.txt file.
+    kwargs : pass through variables for queryPackage
+        e.g.: citationOption=2,emailTag='githubActionTest@DanNBullock.com'
+        They don't need to be unpacked at this level.
+
+    Returns
+    -------
+    citationList : list of strings
+        A list of citations corresponding to the packages listed in the input
+        requirementsTXTpath file.
+
+    """
+    
+    #get the list of packages
+    packagesList=parseRequirementsTXT(requirementsTXTpath)
+    
+    #iterate through them to get a citation for each
+    citationList=[queryPackage(iPackage,**kwargs) for iPackage in packagesList]
+    
+    return citationList
