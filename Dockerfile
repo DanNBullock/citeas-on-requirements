@@ -12,5 +12,4 @@ COPY --from=builder /app /app
 WORKDIR /app
 ENV PYTHONPATH /app
 #a test to see if it gets this far
-CMD ["echo 'test' "]
-CMD ["printenv ; /app/main.py"]
+CMD ["/app/main.py"]
