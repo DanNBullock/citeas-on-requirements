@@ -249,8 +249,14 @@ def inputToCitations(inputPath,kwargs={}):
 #define main function / wrapper
 def main():
     import os
+    inputPath = os.environ["INPUT_INPUTFILE"]
+    
+    import sys
+    #unpack the contents of the sysargs
+    #argsIn=[iArg for iArg in sys.argv]
+    
     #get the input from the input action yml file?
-    inputPath = os.environ["inputFile"]
+    #inputPath = argsIn[0]
 
     #run the function
     inputToCitations(inputPath)
