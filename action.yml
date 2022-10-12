@@ -4,7 +4,7 @@ author: "Daniel N Bullock"
 inputs:
   inputFile:
     description: "Input file to parse & make citations for"
-    default: "requirements.txt"
+    default: "'requirements.txt'"
 outputs:
   myOutput:
     description: "ACKNOWLEDGMENTS.md file, a lightly formatted software bibliography"
@@ -12,4 +12,4 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${inputs.inputFile}
+    - ${{inputs.inputFile}}
