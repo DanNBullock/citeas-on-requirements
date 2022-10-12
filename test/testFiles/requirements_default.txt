@@ -1,0 +1,4 @@
+ipython==8.5.0
+numpy==1.23.3
+pandas==1.5.0
+requests==2.27.1

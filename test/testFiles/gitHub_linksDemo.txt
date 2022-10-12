@@ -1,0 +1,9 @@
+https://github.com/dipy/dipy
+https://github.com/DanNBullock/wma_pyTools
+https://github.com/pandas-dev/pandas
+https://github.com/numpy/numpy
+https://github.com/ourresearch/citeas-api
+https://github.com/jupyter/notebook
+https://github.com/nipy/nibabel
+https://github.com/nilearn/nilearn
+https://github.com/scilus/scilpy

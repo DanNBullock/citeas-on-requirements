@@ -170,3 +170,78 @@ def requirementsToCitationList(requirementsTXTpath, kwargs={}):
     citationList=[queryPackage(iPackage,**kwargs) for iPackage in packagesList]
     
     return citationList
+
+def citationListTOmdOut(citationList,outFileName='ACKNOWLEDGMENTS.md'):
+    """
+    Takes input citationList (from requirementsToCitationList) and produces a
+    markdown formatted bibliography output.
+
+    Parameters
+    ----------
+    citationList : list of strings
+        A list of citations, presumably from from requirementsToCitationList
+    outFileName : string, optional
+        The desired name of the output, markdown formatted citations. 
+        The default is 'ACKNOWLEDGMENTS.md'.
+
+    Returns
+    -------
+    None. Saves down output
+
+    """
+    from datetime import date
+    #TODO develop and load up a boilerplate text block for citation page
+    #in lieu of that, just have a header and generation date
+    #headerTextBlock=<LOAD BOILERPLATE HERE>
+    
+    titleLine='#Cited software'
+    
+    #get todays date
+    today = date.today()
+    #generate dateString
+    dateString=today.strftime("%m/%d/%y")
+    
+    #produce ALTERNATIVE header text block
+    
+    headerTextBlock='\n'.join([titleLine,'Results generated on: ' + dateString])
+    
+    #now join with list, maybe not appropriately formatted in case of Nature,
+    #due to autodetect / numbering issue?
+    outDocText='\n'.join([headerTextBlock,'\n'.join(citationList)])
+    
+    #save the output
+    text_file = open(outFileName, "w")
+    text_file.write(outDocText)
+    text_file.close()
+    
+def inputToCitations(inputPath,kwargs={}):
+    """
+    Takes input citationList (from requirementsToCitationList) and produces a
+    markdown formatted bibliography output.
+    
+    Future Note: future versions of this code will use this function to parse
+    and handle different types of inputs, e.g. Dockerfile, pyproject-toml,
+    or requirements.txt
+
+    Parameters
+    ----------
+    inputPath : string
+        Path to source dependancy record file
+    kwargs : pass through variables for queryPackage and citationListTOmdOut
+        Variables governing underlying function behaviors
+
+    Returns
+    -------
+    None. Saves down output
+
+    """
+    
+    #TODO create case statement here to detect and handle different types of
+    #file inputs, e.g. Dockerfile, pyproject-toml, or requirements.txt
+    
+    #for now though...
+    #assume it's a requirements.txt file and obtain the citationList
+    citationList=requirementsToCitationList(inputPath, kwargs=kwargs)
+    
+    #generate md output file
+    citationListTOmdOut(citationList,**kwargs)
