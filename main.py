@@ -258,8 +258,9 @@ def main():
     print('Input path obtained')
     print(inputPath)
     #check if it's there, throw error if not
-    raise FileNotFoundError(
-        errno.ENOENT, os.strerror(errno.ENOENT), inputPath)
+    if not os.path.exists(inputPath):
+        raise FileNotFoundError(
+            errno.ENOENT, os.strerror(errno.ENOENT), inputPath)
 
     #run the function
     inputToCitations(inputPath)
