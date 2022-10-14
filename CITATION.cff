@@ -7,6 +7,15 @@ message: >-
   If you use this software, please cite it using the
   metadata from this file.
 type: software
+license: Apache-2.0
+repository-code: "https://github.com/DanNBullock/citeas-on-requirements"
+abstract: A GitHub action for using the CiteAs API to generate a software citation ACKNOWLEDGEMENTS.md document automatically from a requirements.txt file.
+keywords:
+  - citation
+  - automatic-documentation
+  - automated-documentation
+  - github-actions
+  - citeas
 authors:
   - given-names: Daniel
     family-names: Bullock
