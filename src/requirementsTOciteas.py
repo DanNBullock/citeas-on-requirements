@@ -113,7 +113,7 @@ def queryPackage(packageString,citationOption=2,emailTag='githubActionTest@DanNB
     import requests
     import json
     import warnings
-    import time
+
     
     #set url stem for query
     apiStem='https://api.citeas.org/product/'
@@ -124,21 +124,43 @@ def queryPackage(packageString,citationOption=2,emailTag='githubActionTest@DanNB
     #form the query URL
     queryURL=''.join([apiStem,packageString,'?','email=',emailTag])
     
-    #use requests to perform the query
-    outAPIresponse=requests.get(queryURL)
+    #sometimes we don't always get what we want from the query, either due to
+    #connectivity issues or because of stocastic results, so we have to implement
+    # a while-try loop
     
-    #convert output string to json format
-    outResponseJson=json.loads(outAPIresponse.text)
+    #how many times do we want to try
+    attemptLimit=4
+    #attemptLimit=4 results in 5 tries
+    currentAttempts=0
+    #set a holder to indicate success
+    currentSuccess=False
     
+    #implement loop
+    while not currentSuccess and currentAttempts <= attemptLimit:
+        try: 
+            #use requests to perform the query
+            outAPIresponse=requests.get(queryURL)
+            
+            #convert output string to json format
+            outResponseJson=json.loads(outAPIresponse.text)
+            
+            #set success status to true
+            currentSuccess=True
+        except:
+            #up the iterator here
+            currentAttempts=currentAttempts+1
+        #if you fail after that many tries and it's still a failure, raise
+        #an exception
+        if not currentSuccess and currentAttempts >= attemptLimit:
+            raise Exception('Failure to obtain citation information for' + packageString + ' after '+ str(currentAttempts) +' attempts.')
+            
     #index in to the response json dictionary and extract the desired citation
     citationOut=outResponseJson['citations'][citationOption]['citation']
     
     #use the behavior of the APS citation to check for mangled authorship
     if outResponseJson['citations'][0]['citation'][0:6]=='(n.d.)':
         warnings.warn('Authorship record for requested package  ' + packageString +'  appears to be mangled')
-        
-    #add a wait, to ensure that we don't get rate limited by the API    
-    time.sleep(5)
+
     
     return citationOut
     
