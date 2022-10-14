@@ -239,6 +239,8 @@ def inputToCitations(inputPath,kwargs={}):
     #TODO create case statement here to detect and handle different types of
     #file inputs, e.g. Dockerfile, pyproject-toml, or requirements.txt
     
+    #throw error if 
+    
     #for now though...
     #assume it's a requirements.txt file and obtain the citationList
     citationList=requirementsToCitationList(inputPath, kwargs=kwargs)
@@ -248,17 +250,16 @@ def inputToCitations(inputPath,kwargs={}):
 
 #define main function / wrapper
 def main():
+    import errno
     import os
+
     print('Beginning citation generation process')
     inputPath = os.environ["INPUT_INPUTFILE"]
     print('Input path obtained')
     print(inputPath)
-    #import sys
-    #unpack the contents of the sysargs
-    #argsIn=[iArg for iArg in sys.argv]
-    
-    #get the input from the input action yml file?
-    #inputPath = argsIn[0]
+    #check if it's there, throw error if not
+    raise FileNotFoundError(
+        errno.ENOENT, os.strerror(errno.ENOENT), inputPath)
 
     #run the function
     inputToCitations(inputPath)
