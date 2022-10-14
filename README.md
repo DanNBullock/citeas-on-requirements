@@ -48,6 +48,9 @@ jobs:
 
 In essence, this GitHub action is just a wrapper around the [CiteAs](https://citeas.org/) [API](https://citeas.org/api).  While [CiteAs](https://citeas.org/) is a great resource, it is not perfect.  In particular, it currently appears to have some trouble with prompts that are based upon simply the package name (as would be the case for information coming from the requirements.txt file)--CiteAs functionality with DOIs or repository URLs seems to work more reliabily.  It is hoped that as CiteAs develops and becomes more robust, so too will the output of this resource.
 
+### Recomendations on obtaining a requirements.txt file
+
+The operation of this GitHub action is predicated upon the assumption that an accepted "manifest-type" file (e.g. `requirements.txt`, `Dockerfile`, `pyproject.toml`) is present in the--although currently only `requirements.txt` is accepted.  A `requirements.txt` file can be generated manually or, using [pipreqs](https://pypi.org/project/pipreqs/), automatically.  There is even an existing GitHub action for automatically generating a `requirements.txt`, [pipreqs-action](https://github.com/marketplace/actions/automatic-requirements-txt-for-python-projects), which can do this as well.  However, it's worth noting that for this GitHub action implementation, the versioning information that is transcribed to the output `requirements.txt` _is not_ coming from your local environment / setup.  In any case, for the purposes of this GitHub action, having a poorly versioned `requirements.txt` is better than not having one at all.
 
 ## Project / Codebase overview
 
