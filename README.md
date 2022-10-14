@@ -6,7 +6,7 @@ GitHub action for using the [CiteAs](https://citeas.org/) [API](https://citeas.o
 
 ### Keywords
 
-keywords: ctation, automatic-documentation, automated-documentation, github-actions, citeas
+keywords: citation, automatic-documentation, automated-documentation, github-actions, citeas
 
 ## Usage
 
