@@ -1,6 +1,6 @@
 # CiteAs-on-requirements
 
-## Overview description
+## Overview
 
 GitHub action for using the [CiteAs](https://citeas.org/) [API](https://citeas.org/api) to generate a software citation ACKNOWLEDGEMENTS.md document automatically from a requirements.txt file.
 
