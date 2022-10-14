@@ -194,7 +194,7 @@ def citationListTOmdOut(citationList,outFileName='ACKNOWLEDGMENTS.md'):
     #in lieu of that, just have a header and generation date
     #headerTextBlock=<LOAD BOILERPLATE HERE>
     
-    titleLine='#Cited software'
+    titleLine='# Cited software'
     
     #get todays date
     today = date.today()
@@ -203,11 +203,11 @@ def citationListTOmdOut(citationList,outFileName='ACKNOWLEDGMENTS.md'):
     
     #produce ALTERNATIVE header text block
     
-    headerTextBlock='\n'.join([titleLine,'Results generated on: ' + dateString])
+    headerTextBlock='\n\n'.join([titleLine,'(Results generated on: ' + dateString+')'])
     
     #now join with list, maybe not appropriately formatted in case of Nature,
     #due to autodetect / numbering issue?
-    outDocText='\n'.join([headerTextBlock,'\n'.join(citationList)])
+    outDocText='\n\n'.join([headerTextBlock,'\n\n'.join(citationList)])
     
     #save the output
     text_file = open(outFileName, "w")
