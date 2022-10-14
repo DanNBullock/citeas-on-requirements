@@ -22,14 +22,15 @@ jobs:
       - uses: actions/checkout@master
       - name: Self test
         id: generateCitation
-
+        description: "GitHub action which builds citations from requirements.txt"
         uses: DanNBullock/citeas-on-requirements@master
 
-        # Path to requirements.txt file
+        # The input requirements.txt file (as a string?)
         with:
           inputFile: "requirements.txt"
       - name: Commit changes
         uses: test-room-7/action-update-file@v1
+        description: "GitHub action to commit the specific updated file"
         with:
           file-path: 'ACKNOWLEDGMENTS.md'
           commit-msg: Update ACKNOWLEDGMENTS.md
