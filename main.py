@@ -203,7 +203,7 @@ def citationListTOmdOut(citationList,outFileName='ACKNOWLEDGMENTS.md'):
     
     #produce ALTERNATIVE header text block
     
-    headerTextBlock='\n\n'.join([titleLine,'(Results generated on: ' + dateString+')'])
+    headerTextBlock='\n\n'.join([titleLine,'(Results retrieved on: ' + dateString+')'])
     
     #now join with list, maybe not appropriately formatted in case of Nature,
     #due to autodetect / numbering issue?
