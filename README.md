@@ -81,7 +81,7 @@ This project is hoped to help adress an apparent gap in the open-source and scie
 
 #### License
 
-[todo]
+Apache License 2.0
 
 #### Changelog
 
