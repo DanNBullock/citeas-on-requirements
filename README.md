@@ -42,7 +42,7 @@ jobs:
 | Input                                             | Description                                        |Default                                        |
 |------------------------------------------------------|-----------------------------------------------|-----------------------------------------------|
 | `inputFile`  | Path to the requirements.txt file    |  "requirements.txt"
-| `citaionMethod`  | Index to select the output format of citations : ['APS','Harvard','Nature','MLA','Chicago','Vancouver']    | [not yet implemented] |
+| `citaionMethod`  | Index to select the output format of citations : ['APS','Harvard','Nature','MLA','Chicago','Vancouver']    | 2 |
 
 ### IMPORTANT USAGE NOTE
 
