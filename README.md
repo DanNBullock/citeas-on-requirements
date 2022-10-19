@@ -4,7 +4,7 @@
 
 [GitHub action](https://github.com/features/actions) for using the [CiteAs](https://citeas.org/) [API](https://citeas.org/api) to generate a software citation ACKNOWLEDGEMENTS.md document automatically from a [requirements.txt](https://learnpython.com/blog/python-requirements-file/) file.
 
-(**See usage note below for issues relating to citation output quality**)[#important-usage-note]
+**[See usage note below for issues relating to citation output quality](#important-usage-note)**
 
 ### Keywords
 
@@ -46,7 +46,7 @@ jobs:
 | Input                                             | Description                                        |Default                                        |
 |------------------------------------------------------|-----------------------------------------------|-----------------------------------------------|
 | `inputFile`  | Path to the requirements.txt file    |  "requirements.txt"
-| `citaionMethod`  | Index to select the output format of citations : ['APS','Harvard','Nature','MLA','Chicago','Vancouver']    | 2 |
+| `formatSelect`  | Index to select the output format of citations : [0: 'APS', 1: 'Harvard', 2: 'Nature', 3: 'MLA', 4: 'Chicago', 5: 'Vancouver']    | 2 |
 
 ### IMPORTANT USAGE NOTE
 
