@@ -5,6 +5,10 @@ inputs:
   inputFile:
     description: "Input file to parse & make citations for"
     default: "/app/test/testFiles/requirements_default.txt"
+  formatSelect:
+  # [0 = 'APS', 1 = 'Harvard', 2 = 'Nature', 3 = 'MLA', 4 = 'Chicago', 5 = 'Vancouver']
+    description: "Integer selector, indicating which citation format the output should be in."
+    default: 2 
 outputs:
   myOutput:
     description: "ACKNOWLEDGMENTS.md file, a lightly formatted software bibliography"
