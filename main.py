@@ -77,7 +77,7 @@ def parseRequirementsTXT(requirementsTXTpath):
 
 
 def queryPackage(packageString, citationOption=2,
-                 emailTag='githubActionTest@DanNBullock.com'):
+                 emailTag='githubActionTest@DanNBullock.com',**kwargs):
     """
     Performs a query using the [citeas api](https://citeas.org/api), to find a
     citation for the input string, which is presumed to correspond to a
@@ -130,7 +130,7 @@ def queryPackage(packageString, citationOption=2,
     # so we have to  implement a while-try loop
 
     # how many times do we want to try
-    attemptLimit = 4
+    attemptLimit = 6
     # attemptLimit=4 results in 5 tries
     currentAttempts = 0
     # set a holder to indicate success
@@ -153,8 +153,8 @@ def queryPackage(packageString, citationOption=2,
         # if you fail after that many tries and it's still a failure, raise
         # an exception
         if not currentSuccess and currentAttempts >= attemptLimit:
-            raise Exception('Failure to obtain citation information for' +
-                            packageString + ' after ' + str(currentAttempts) +
+            raise Exception('Failure to obtain citation information for ' +
+                            packageString + ' after ' + str(currentAttempts+1) +
                             ' attempts.')
     # index in to the response json dictionary and extract the desired citation
     citationOut = outResponseJson['citations'][citationOption]['citation']
@@ -167,7 +167,7 @@ def queryPackage(packageString, citationOption=2,
     return citationOut
 
 
-def requirementsToCitationList(requirementsTXTpath, kwargs={}):
+def requirementsToCitationList(requirementsTXTpath, **kwargs):
     """
     Iterates through the requirements.txt entries and generates citations
     for each item.
@@ -198,7 +198,7 @@ def requirementsToCitationList(requirementsTXTpath, kwargs={}):
     return citationList
 
 
-def citationListTOmdOut(citationList, outFileName='ACKNOWLEDGMENTS.md'):
+def citationListTOmdOut(citationList, outFileName='ACKNOWLEDGMENTS.md', **kwargs):
     """
     Takes input citationList (from requirementsToCitationList) and produces a
     markdown formatted bibliography output.
@@ -243,7 +243,7 @@ def citationListTOmdOut(citationList, outFileName='ACKNOWLEDGMENTS.md'):
     text_file.close()
 
 
-def inputToCitations(inputPath, kwargs={}):
+def inputToCitations(inputPath, **kwargs):
     """
     Takes input citationList (from requirementsToCitationList) and produces a
     markdown formatted bibliography output.
@@ -293,11 +293,13 @@ def main():
         raise FileNotFoundError(
             errno.ENOENT, os.strerror(errno.ENOENT), inputPath)
 
+    # get the input for selecting the output format
+    citationOption = os.environ["INPUT_FORMATSELECT"]
+
     # run the function
-    inputToCitations(inputPath)
+    inputToCitations(inputPath,kwargs={'citationOption' : citationOption})
     print('Citations generated')
 
 
 if __name__ == "__main__":
     main()
-    
