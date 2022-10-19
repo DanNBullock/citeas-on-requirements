@@ -58,8 +58,8 @@ The operation of this [GitHub action](https://github.com/features/actions) is pr
 
 ## Project / Codebase overview
 
-- src: contains the main codebase (duplicated in main.py, an admittedly bad practice; should be treated as a module)
-- test: contains various test requirement.txt-like documents
+- `src`: contains the main codebase (duplicated in main.py, an admittedly bad practice; should be treated as a module)
+- `test`: contains various test requirement.txt-like documents
 
 ## Project / codebase provenance
 
@@ -91,7 +91,7 @@ Apache License 2.0
 
 Contributions are welcome and encouraged, particularly in the following areas:
 
-- Capability enhancment (e.g. items from roadmap below)
+- Capability enhancment (e.g. items from [roadmap](#roadmap) below)
 - Code streamlining & improvement (the initial implementation of this code is likely inelegant and inefficient)
 - General bug / error reports (via the [issues page](https://github.com/DanNBullock/citeas-on-requirements/issues))
 - Questions / suggestions / comments (also via the [issues page](https://github.com/DanNBullock/citeas-on-requirements/issues))
