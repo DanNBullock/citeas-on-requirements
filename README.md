@@ -30,6 +30,8 @@ jobs:
         # The input requirements.txt file (as a string?)
         with:
           inputFile: "requirements.txt"
+          # [0 = 'APS', 1 = 'Harvard', 2 = 'Nature', 3 = 'MLA', 4 = 'Chicago', 5 = 'Vancouver']
+          formatSelect: 2
       - name: Commit changes
         uses: test-room-7/action-update-file@v1
         description: "GitHub action to commit the specific updated file"
